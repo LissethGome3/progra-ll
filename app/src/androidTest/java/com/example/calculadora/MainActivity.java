@@ -18,7 +18,7 @@ import java.util.IllegalFormatCodePointException;
 
 public class MainActivity extends AppCompatActivity {
     TabHost tbhConversores;
-    Button btnCalcular;
+    Button btnCalcular = findViewById(R.id.btnCalcularArea);
     TextView tempVal;
     Spinner cboDe, cboA;
     Conversores MiConversor = new Conversores();
@@ -120,9 +120,48 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    btnCalcular = findViewById(R.id.btnCalcularArea); //boton calcularArea
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View v) {
+            try {
+                tempVal = (TextView) findViewById(R.id.txtCantidadArea);
+                double cantidad = Double.parseDouble(tempVal.getText().toString());
+
+                cboDe = findViewById(R.id.cboDeArea);
+                cboA = findViewById(R.id.cboAArea);
+                tempVal = findViewById(R.id.lblRespuestaL);
+                double roundOff = Math.round((MiConversor.Convertir(3, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+                tempVal.setText("Respuesta: " + roundOff);
+            }catch (Exception e){
+                tempVal = findViewById(R.id.lblRespuestaL);
+                tempVal.setText("Por favor ingrese los valores correspondiente");
+                Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        }
+    });
+        btnCalcular = findViewById(R.id.btnCalcularMasa);
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    tempVal = (TextView) findViewById(R.id.txtCantidadMasa);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+
+                    cboDe = findViewById(R.id.cboDeMasa);
+                    cboA = findViewById(R.id.cboAMasa);
+                    tempVal = findViewById(R.id.lblRespuestaL);
+                    double roundOff = Math.round((MiConversor.Convertir(3, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+                    tempVal.setText("Respuesta: " + roundOff);
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuestaL);
+                    tempVal.setText("Por favor ingrese los valores correspondiente");
+                    Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }
+
 
 class Conversores {
     double [][] conversiones = {
