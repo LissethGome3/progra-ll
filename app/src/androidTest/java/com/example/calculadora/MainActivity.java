@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     });
-        btnCalcular = findViewById(R.id.btnCalcularMasa);
+        btnCalcular = findViewById(R.id.btnCalcularMasa); //boton calcularMasa
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -148,11 +148,64 @@ public class MainActivity extends AppCompatActivity {
 
                     cboDe = findViewById(R.id.cboDeMasa);
                     cboA = findViewById(R.id.cboAMasa);
-                    tempVal = findViewById(R.id.lblRespuestaL);
-                    double roundOff = Math.round((MiConversor.Convertir(3, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
+                    tempVal = findViewById(R.id.lblRespuestaMasa);
+                    double roundOff = Math.round((MiConversor.Convertir(4, cboDe.getSelectedItemPosition(), cboA.getSelectedItemPosition(), cantidad))*10000.0) / 10000.0;
                     tempVal.setText("Respuesta: " + roundOff);
                 }catch (Exception e){
-                    tempVal = findViewById(R.id.lblRespuestaL);
+                    tempVal = findViewById(R.id.lblRespuestaMasa);
+                    tempVal.setText("Por favor ingrese los valores correspondiente");
+                    Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnCalcular = findViewById(R.id.btnCalcularTemperatura); //boton calcularTemperatura
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    tempVal = (TextView) findViewById(R.id.txtCantidadTemperatura);
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double Respuesta = 0;
+                    cboDe = findViewById(R.id.cboDeTemperatura);
+                    cboA = findViewById(R.id.cboATemperatura);
+                    tempVal = findViewById(R.id.lblRespuestaTemperatura);
+                    if (cboDe.getSelectedItemPosition() == 0){
+                        if (cboA.getSelectedItemPosition() == 0) {
+                            Respuesta = cantidad;
+                        }
+                        if (cboA.getSelectedItemPosition() == 1){
+                            Respuesta =  Math.round((cantidad * 1.8) + 32);
+                        }
+                        if (cboA.getSelectedItemPosition() == 2){
+                            Respuesta =  Math.round(cantidad + 273.15);
+                        }
+                    }
+                    if (cboDe.getSelectedItemPosition() == 1) {
+                        if (cboA.getSelectedItemPosition() == 0){
+                            Respuesta = ((cantidad - 32) * (9/5));
+                        }
+                        if (cboA.getSelectedItemPosition() == 1){
+                            Respuesta = cantidad;
+                        }
+                        if (cboA.getSelectedItemPosition() == 2){
+                            Respuesta = (cantidad - 32) * (9/5) + 273.15;
+                        }
+                    }
+                    if (cboDe.getSelectedItemPosition() == 2){
+                        if (cboA.getSelectedItemPosition() == 0){
+                            Respuesta = Math.round(cantidad - 273.15);
+                        }
+                        if (cboA.getSelectedItemPosition() == 1){
+                            Respuesta = Math.round(((cantidad - 273.15) * (9/5)) + 32);
+                        }
+                        if (cboA.getSelectedItemPosition() == 2){
+                            Respuesta = cantidad;
+                        }
+                    }
+
+                    tempVal.setText("Respuesta: " + Respuesta);
+                }catch (Exception e){
+                    tempVal = findViewById(R.id.lblRespuestaTemperatura);
                     tempVal.setText("Por favor ingrese los valores correspondiente");
                     Toast.makeText(getApplicationContext(), "Por ingrese los valores correspondiente "+ e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
